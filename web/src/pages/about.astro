@@ -7,7 +7,7 @@ import SocialShare from '@components/form/Social.astro';
 import { parseMarkdown } from '@utils/parse-markdown';
 
 const contributorsResource = async () => {
-	const url = 'https://api.github.com/repos/lissy93/personal-security-checklist/contributors?per_page=100';
+	const url = 'https://api.github.com/repos/mpinac/bsh-sv-awesome-security/contributors?per_page=100';
 	const response = await fetch(url);
 	if (!response.ok) {
 		throw new Error('Failed to fetch contributors');
@@ -15,17 +15,8 @@ const contributorsResource = async () => {
 	return await response.json();
 };
 
-const sponsorsResource = async () => {
-	const url = 'https://github-sponsors.as93.workers.dev/lissy93';
-	const response = await fetch(url);
-	if (!response.ok) {
-		throw new Error('Failed to fetch sponsors');
-	}
-	return await response.json();
-};
-
 const licenseContent = async () => {
-	const url = 'https://raw.githubusercontent.com/Lissy93/awesome-privacy/HEAD/LICENSE';
+	const url = 'https://raw.githubusercontent.com/mpinac/bsh-sv-awesome-security/HEAD/LICENSE';
 	const response = await fetch(url);
 	if (!response.ok) {
 		throw new Error('Failed to fetch license');
@@ -35,7 +26,7 @@ const licenseContent = async () => {
 
 const aboutOurData = `
 All data is stored in 
-[\`awesome-privacy.yml\`](https://github.com/lissy93/awesome-privacy/blob/main/awesome-privacy.yml).
+[\`awesome-privacy.yml\`](https://github.com/mpinac/bsh-sv-awesome-security/blob/main/awesome-privacy.yml).
 
 This file is then pulled into the website at build-time, and also used to generate
 the repositories README file.
@@ -57,15 +48,6 @@ Currently, this extra data is pulled from:
 	- Implemented using self-hosted instance of Remark42
 - **Portainer Templates** - To fetch info about each project's Docker image (if it's self-hosted)
 	- Including supported architectures, run command, pull count, last updated and config options
-
-### API
-We also have a free, no-auth, CORS-enabled RESR API,
-which you can use to access Awesome Privacy's data programmatically,
-or to build your own apps on top of it.
-
-The [Swagger Spec](api) outlines all endpoints, usage and examples.
-
-Use our public instance, at: \`https://api.awesome-privacy.xyz\` or [self-host your own](https://github.com/Lissy93/awesome-privacy/tree/main/api)
 `;
 
 const projectRequrements = `
@@ -104,88 +86,12 @@ by the community, and the drawbacks / anti-features must be clearly listed along
 Usually these entries go within the "Notable Mentions" section instead._
 `;
 
-
-const projects = [
-	{
-		title: 'Email Comparison',
-		description: 'Objective comparison of private/secure mail providers',
-		icon: 'https://email-comparison.as93.net/favicon.png',
-		link: 'https://github.com/lissy93/email-comparison',
-	},
-	{
-		title: 'Personal Security Checklist',
-		description: 'Checklist of security tips, for protecting your privacy',
-		icon: 'https://i.ibb.co/Rb6P6h6/shield.png',
-		link: 'https://github.com/Lissy93/personal-security-checklist',
-	},
-	{
-		title: 'Web-Check',
-		description: 'OSINT tool for analysing any website',
-		icon: 'https://web-check.as93.net/web-check.png',
-		link: 'https://github.com/lissy93/web-check',
-	},
-	{
-		title: 'Dashy',
-		description: 'Dashboard app, for organising your self-hosted services',
-		icon: 'https://dashy.to/img/dashy.png',
-		link: 'https://github.com/lissy93/dashy',
-	},
-	{
-		title: 'Portainer-Templates',
-		description: 'Compiled repository of 1-click Docker apps for self-hosting',
-		icon: 'https://portainer-templates.as93.net/favicon.png',
-		link: 'https://github.com/lissy93/portainer-templates',
-	},
-	{
-		title: 'AdGuardian',
-		description: 'CLI tool for monitoring your networks traffic and AdGuard DNS stats',
-		icon: 'https://adguardian.as93.net/favicon.png',
-		link: 'https://github.com/lissy93/adguardian-term',
-	},
-	{
-		title: 'Bug-Bounties',
-		description: 'Database of websites which accept responsible vulnerability discolsure',
-		icon: 'https://bug-bounties.as93.net/favicon.png',
-		link: 'https://github.com/lissy93/bug-bounties',
-	},
-	{
-		title: 'Git-In',
-		description: 'Tools and resources to help beginners get into open source',
-		icon: 'https://www.git-in.to/favicon.png',
-		link: 'https://github.com/lissy93/git-in',
-	},
-];
-
 export const socials = [
 	{
 		title: 'GitHub',
 		icon: 'hub',
-		link: 'https://github.com/lissy93',
+		link: 'https://github.com/mpinac',
 		color: '#EA4AAA',
-	},
-	{
-		title: 'Twitter',
-		icon: 'twitter',
-		link: 'https://x.com/lissy_sykes',
-		color: '#1D9BF0',
-	},
-	{
-		title: 'Mastodon',
-		icon: 'mastodon',
-		link: 'https://mastodon.social/@lissy93',
-		color: '#6364FF',
-	},
-	{
-		title: 'Dev',
-		icon: 'dev',
-		link: 'https://dev.to/lissy93',
-		color: '#cece04',
-	},
-	{
-		title: 'LinkedIn',
-		icon: 'linkedin',
-		link: 'https://linkedin.com/in/aliciasykes',
-		color: '#0A66C2',
 	},
 ];
 
@@ -242,19 +148,6 @@ const description = 'Privacy is a fundamental human right; '
 		<hr />
 
 		<h2 id="acknowledgements">Acknowledgements</h2>
-		<h3 id="sponsors">Sponsors</h3>
-		<p>Huge thanks to the following sponsors, for their ongoing support 💖</p>
-		<div class="user-list">
-			{sponsorsResource().then((sponsors) => {
-				return sponsors.map((sponsor: any) => (
-					<a class="user" href={`https://github.com/${sponsor.login}`} target="_blank" rel="noreferrer">
-						<img src={sponsor.avatarUrl} alt={sponsor.login} />
-						<p>{sponsor.name || sponsor.login}</p>
-					</a>
-				));
-			})}
-		</div>
-
 		<h3 id="contributors">Contributors</h3>
 		<p>
 			This project exists thanks to all the people who've helped build and maintain it.<br />
@@ -271,80 +164,6 @@ const description = 'Privacy is a fundamental human right; '
 			})}
 		</div>
 
-		<hr />
-
-		<h2 id="support-us">Help us out</h2>
-		<p>
-			Awesome Privacy is a free, open source and community-maintained resource.<br />
-			There's a few ways you can support us:
-			<ul class="help-list">
-				<li>Visiting, forking, or starring or our <a href="https://github.com/lissy93/awesome-privacy">GitHub repository</a></li>
-				<li>Help us keep our info up-to-date, but submitting an addition, removal or ammendment</li>
-				<li>Leave feedback on services that you've used, to help others make a more informed decission</li>
-				<li>Consider <a href="https://github.com/sponsors/Lissy93">sponsoring us on GitHub</a>, if you're able 💖</li>
-				<li>Share Awesome Privacy with your network</li>
-			</ul>
-			<SocialShare />
-		</p>
-
-		<hr />
-
-		<h2 id="author">Author</h2>
-		<article class="author">
-				<p>
-					This project was originally started by
-					me, <a href="https://aliciasykes.com">Alicia Sykes</a>
-					(with a lot of help from the community)
-				</p>
-				<br />
-				<p class="about">
-					I build apps which aim to help people escape big tech, secure their data,
-					and protect their privacy.
-				</p>
-				<br />
-				<div class="pic-and-socials">
-					<a href="https://aliciasykes.com">
-						<img class="pic" width="180" height="240" alt="Alicia Sykes" src="https://i.ibb.co/fq10qhL/DSC-0597.jpg" />
-					</a>
-					<div class="socials">
-						{
-							socials.map((social) => (
-								<a href={social.link} style={`--color: ${social.color}`} target="_blank">
-									<Icon icon={social.icon} width={24} height={24} />
-								</a>
-							))
-						}
-					</div>
-				</div>
-				<p class="more-about">
-					I have a particular interest in self-hosting, Linux, security and OSINT.<br />
-					So if this type of stuff interests you, check out these other projects:
-				</p>
-				<ul>
-					{
-						projects.map((project) => (
-							<li>
-								<img width="20" height="20" alt={project.title} src={project.icon} />
-								<a href={project.link} target="_blank" rel="noreferrer">
-									{project.title}
-								</a> - {project.description}
-							</li>
-						))
-					}
-					<li>
-						...and loads more, over at <a href="https://apps.aliciasykes.com/">apps.aliciasykes.com</a>
-						and on <a href="https://github.com/lissy93">github.com/lissy93</a>
-					</li>
-				</ul>
-				<br />
-				<p>
-					If you'd like to support the ongoing work on Awesome Privacy,
-					and other similar projects,
-					consider <a href="https://github.com/sponsors/lissy93">sponsoring me</a> on GitHub 💖
-				</p>
-
-		</article>
-		
 		<hr />
 
 		<h2 id="license">License</h2>
